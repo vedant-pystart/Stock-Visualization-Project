@@ -11,6 +11,8 @@ response = requests.get(URL)
 data = response.json()
 data = data["Weekly Adjusted Time Series"]
 
+
+# Final Index of the length
 indexend = 100
 
 datax = list(data.keys())[0:indexend]
