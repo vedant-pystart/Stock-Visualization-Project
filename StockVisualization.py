@@ -1,6 +1,7 @@
 # Library Imports (Requests for API, Plotly GO for data visualization)
 import requests
 import plotly.graph_objects as go
+from HammerCandle import detect_hammer
 
 APIKey = "test"
 Timeprd = "TIME_SERIES_WEEKLY_ADJUSTED"
@@ -22,16 +23,19 @@ opendata, closedata, highdata, lowdata = [], [], [], [] # Initializes 4 lists fo
 
 for date in datax: # Increments through each item in datax
     # Makes an "item" for the data
-    itemopen = data[date]["1. open"] 
-    itemclose = data[date]["4. close"]
-    itemhigh = data[date]["2. high"]
-    itemlow = data[date]["3. low"]
+    itemopen = float(data[date]["1. open"])
+    itemclose = float(data[date]["4. close"])
+    itemhigh = float(data[date]["2. high"])
+    itemlow = float(data[date]["3. low"])
 
     # Appends the items into the previously initialized lists
-    opendata.append(float(itemopen))
-    closedata.append(float(itemclose))
-    highdata.append(float(itemhigh))
-    lowdata.append(float(itemlow))
+    opendata.append(itemopen)
+    closedata.append(itemclose)
+    highdata.append(itemhigh)
+    lowdata.append(itemlow)
+
+    hammer_status = detect_hammer(itemopen, itemclose, itemhigh, itemlow)
+    print(f"Date: {date}: {hammer_status}")
 
 # DATA VISUALIZATION IN PLOTLY
 
